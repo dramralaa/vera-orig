@@ -1,11 +1,16 @@
-"""مزامنة دورية (قراءة فقط - صفر كتابة على هنجرستيشن) لكتالوج فيرا الكامل
-على الفرعين، بنفس فكرة `claude_data_bridge.py` عند دوم: تسحب البيانات
-وتحفظها كـ JSON في data/ عشان يبقى عندنا نسخة محلية محدّثة بدل ما نعتمد
-على استدعاء الـAPI كل مرة يدويًا.
+"""مزامنة دورية (قراءة فقط - صفر كتابة على هنجرستيشن) لكتالوج فيرا على
+الفرعين، بنفس فكرة `claude_data_bridge.py` عند دوم.
+
+⚠️ قيد مؤكد من هنجرستيشن نفسها (6 سبتمبر 2026، bug مؤكد على السيرفر):
+- `page_size` أقصى حد مسموح = 500 (أي رقم أكبر يرجّع 400 Bad Request).
+- `page_number` بيتم تجاهله تمامًا من السيرفر - أي رقم صفحة تطلبه بيرجّعلك
+  نفس الصفحة الأولى بالظبط (اتأكد بالاختبار مباشرة). يعني **مفيش طريقة
+  نشوف بيها أكتر من أول 500 صنف من أي كتالوج عبر هذا الـAPI حاليًا** -
+  مش مشكلة في السكربت، قيد حقيقي في الـendpoint. الكود هنا بيجيب صفحة
+  واحدة بس (500 صنف) بدل ما يلف على صفحات فاضية/مكررة.
 """
 import json
 import os
-import time
 from collections import Counter
 from datetime import datetime, timezone
 
@@ -36,19 +41,15 @@ def get_token():
 
 
 def fetch_all(token, vendor_id):
+    # page_number مكسور من عند هنجرستيشن (بيرجّع دايمًا صفحة 1) - بنجيب
+    # page_size=500 (الحد الأقصى المسموح) مرة واحدة بس. لو الـbug اتصلح
+    # مستقبلاً، السطر ده هو اللي محتاج يتغيّر لحلقة صفحات حقيقية.
     url = f"https://hungerstation.partner.deliveryhero.io/v2/chains/{CHAIN_ID}/vendors/{vendor_id}/catalog"
     headers = {"authorization": f"Bearer {token}", "accept": "application/json"}
     r = requests.get(url, headers=headers, params={"page_number": 1, "page_size": 500}, timeout=30)
     r.raise_for_status()
     data = r.json()
-    total_pages = data["total_pages"]
-    products = list(data["products"])
-    for page in range(2, total_pages + 1):
-        r = requests.get(url, headers=headers, params={"page_number": page, "page_size": 500}, timeout=30)
-        r.raise_for_status()
-        products.extend(r.json().get("products", []))
-        time.sleep(0.15)
-    return products
+    return list(data["products"])
 
 
 def main():
