@@ -7,9 +7,20 @@
 
 - `VERA_HUNGERSTATION_CLIENT_ID`
 - `VERA_HUNGERSTATION_CLIENT_SECRET`
-- `VERA_HS_VENDOR_ID` (لسه غير معروف — يُضاف لاحقًا بعد الحصول عليه من بوابة هنجرستيشن)
+
+## معرّفات فيرا على هنجرستيشن (مؤكدة، 6 سبتمبر 2026)
+
+- `chain_id` = `68b31204-81e5-4ea6-a1c0-086ab7e94267`
+- الفروع (من شاشة "معرف البائع" في البوابة):
+  | الفرع | `vendor_id` |
+  |---|---|
+  | فيرا 1 - الروابي | `149439` |
+  | فيرا 2 - النرجس | `174067` |
+  (`84296` معرف الـ"Brand" على مستوى العلامة التجارية - مش `vendor_id`، غير مستخدم في القراءة/الكتابة).
 
 ## Workflows
 
-- `Vera HungerStation Partner API Probe` — فحص قراءة فقط (Read-only) للتوكن
-  والكتالوج، صفر كتابة.
+- `Vera HungerStation Partner API Probe` — فحص قراءة فقط (Read-only) للتوكن.
+- `Vera Catalog Read - Both Branches` — فحص قراءة فقط لكتالوج الفرعين. نتيجة أول
+  تشغيل: فيرا 1 (14/50 صنف `active=true`)، فيرا 2 (16/50) - تأكيد إن الحساب فعلاً
+  شغّال وبيبيع.
