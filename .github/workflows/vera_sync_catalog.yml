@@ -1,0 +1,39 @@
+# مزامنة دورية لكتالوج فيرا (قراءة فقط من هنجرستيشن Partner API) - بنفس فكرة
+# "Claude Data Bridge" عند دوم: تسحب البيانات وتخزنها كملفات JSON في data/
+# داخل نفس الريبو، عشان تبقى محدّثة أول بأول من غير تدخل يدوي.
+name: 🤖 [Vera] Catalog Sync (كل 6 ساعات)
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: '0 3,9,15,21 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install requests
+
+      - name: Sync Vera catalog (read-only)
+        env:
+          VERA_HUNGERSTATION_CLIENT_ID: ${{ secrets.VERA_HUNGERSTATION_CLIENT_ID }}
+          VERA_HUNGERSTATION_CLIENT_SECRET: ${{ secrets.VERA_HUNGERSTATION_CLIENT_SECRET }}
+        run: python scripts/vera_sync_catalog.py
+
+      - name: Commit & Push
+        run: |
+          git config user.name "Vera Bot"
+          git config user.email "bot@vera-orig.local"
+          git add data/
+          git diff --staged --quiet || git commit -m "🤖 مزامنة كتالوج فيرا الدورية"
+          git pull --rebase -q
+          git push
