@@ -1,0 +1,23 @@
+name: Vera Jahez Catalog Report (manual, read-only)
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Pull full Vera Jahez catalog
+        env:
+          JAHEZ_TOKEN_VERA: ${{ secrets.JAHEZ_TOKEN_VERA }}
+        run: python scripts/vera_jahez_catalog_report.py
+      - name: Commit snapshot back to repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/vera_jahez_catalog_snapshot.json
+          git diff --cached --quiet && echo "No changes" || (git commit -m "Update Vera Jahez catalog snapshot" && git push)
