@@ -1,11 +1,11 @@
 {
-  "synced_at_utc": "2026-09-09T13:14:32.185957+00:00",
+  "synced_at_utc": "2026-09-09T18:08:33.040216+00:00",
   "branches": {
     "al_rawabi": {
       "label": "فيرا 1 - الروابي",
       "vendor_id": "149439",
       "total": 7095,
-      "active": 2908,
+      "active": 2911,
       "active_pct": 41.0,
       "top_categories": [
         [
@@ -53,8 +53,8 @@
     "narjis": {
       "label": "فيرا 2 - النرجس",
       "vendor_id": "174067",
-      "total": 7569,
-      "active": 3234,
+      "total": 7568,
+      "active": 3230,
       "active_pct": 42.7,
       "top_categories": [
         [
