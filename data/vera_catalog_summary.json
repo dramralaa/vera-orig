@@ -1,12 +1,12 @@
 {
-  "synced_at_utc": "2026-09-12T12:29:42.700423+00:00",
+  "synced_at_utc": "2026-09-12T17:31:32.393348+00:00",
   "branches": {
     "al_rawabi": {
       "label": "فيرا 1 - الروابي",
       "vendor_id": "149439",
-      "total": 7095,
-      "active": 2884,
-      "active_pct": 40.6,
+      "total": 7094,
+      "active": 2875,
+      "active_pct": 40.5,
       "top_categories": [
         [
           "المكملات الغذائية",
@@ -54,7 +54,7 @@
       "label": "فيرا 2 - النرجس",
       "vendor_id": "174067",
       "total": 7569,
-      "active": 3195,
+      "active": 3193,
       "active_pct": 42.2,
       "top_categories": [
         [
