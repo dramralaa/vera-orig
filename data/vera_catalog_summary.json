@@ -1,11 +1,11 @@
 {
-  "synced_at_utc": "2026-09-13T13:31:07.625474+00:00",
+  "synced_at_utc": "2026-09-13T17:47:06.185260+00:00",
   "branches": {
     "al_rawabi": {
       "label": "فيرا 1 - الروابي",
       "vendor_id": "149439",
-      "total": 7103,
-      "active": 2873,
+      "total": 7104,
+      "active": 2869,
       "active_pct": 40.4,
       "top_categories": [
         [
@@ -38,7 +38,7 @@
         ],
         [
           "مسكنات الألم",
-          186
+          187
         ],
         [
           "العين والأذن والأنف",
@@ -54,7 +54,7 @@
       "label": "فيرا 2 - النرجس",
       "vendor_id": "174067",
       "total": 7570,
-      "active": 3185,
+      "active": 3184,
       "active_pct": 42.1,
       "top_categories": [
         [
